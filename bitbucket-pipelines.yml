@@ -1,0 +1,81 @@
+image: node:14.18.2-alpine
+
+options:
+  docker: true
+  size: 2x
+
+clone:
+  depth: full
+
+definitions:
+  services:
+    docker:
+      memory: 4096
+  caches:
+    cache: ~/.cache
+  steps:
+    - step: &install
+        name: install dependencies
+        caches:
+          - cache
+        script:
+          - yarn ci
+        artifacts:
+          - node_modules/**
+    - step: &run-tests-and-sonar
+        name: run tests and sonar quality gate
+        caches:
+          - cache
+          - docker
+        size: 2x
+        script:
+          - yarn test
+          - pipe: sonarsource/sonarcloud-scan:1.2.0
+            variables:
+              SONAR_TOKEN: ${SONAR_TOKEN}
+              EXTRA_ARGS: '-Dsonar.branch.name=$BITBUCKET_BRANCH'
+          - pipe: sonarsource/sonarcloud-quality-gate:0.1.4
+        services:
+          - docker
+    - step: &build
+        name: build app
+        caches:
+          - cache
+        script:
+          - yarn build:test
+        artifacts:
+          - build/**
+    - step: &e2e-test
+        name: run e2e test
+        image: cypress/browsers:node12.14.1-chrome85-ff81
+        caches:
+          - cache
+        script:
+          - yarn serve &
+          - npx cypress run
+        artifacts:
+          # store any generates images and videos as artifacts
+          - cypress/screenshots/**
+          - cypress/videos/**
+
+pipelines:
+  custom:
+    e2e:
+      - step: *install
+      - step: *build
+      - step: *e2e-test
+  pull-requests:
+    feature/*:
+      - step: *install
+      - step: *run-tests-and-sonar
+    bugfix/*:
+      - step: *install
+      - step: *run-tests-and-sonar
+  branches:
+    master:
+      - step: *install
+      - step: *run-tests-and-sonar
+  tags:
+    '*':
+      - step: *install
+      - step: *run-tests-and-sonar

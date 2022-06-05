@@ -1,0 +1,120 @@
+{
+  "name": "react-ts-webapp-base",
+  "version": "0.1.0",
+  "private": true,
+  "author": "matius.hariman@gmail.com",
+  "dependencies": {
+    "@emotion/react": "11.9.0",
+    "@emotion/styled": "11.8.1",
+    "@hookform/resolvers": "2.8.5",
+    "@mui/icons-material": "5.6.2",
+    "@mui/material": "5.6.4",
+    "@reduxjs/toolkit": "1.7.1",
+    "axios": "0.24.0",
+    "dayjs": "1.10.6",
+    "history": "5.2.0",
+    "lodash": "4.17.21",
+    "notistack": "2.0.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-helmet-async": "1.1.2",
+    "react-hook-form": "7.23.0",
+    "react-redux": "7.2.5",
+    "react-router": "6.2.1",
+    "react-router-dom": "6.2.1",
+    "react-scripts": "5.0.0",
+    "redux-first-history": "5.0.8",
+    "redux-persist": "6.0.0",
+    "redux-saga": "1.1.3",
+    "typescript": "4.3.5",
+    "web-vitals": "2.1.0",
+    "yup": "0.32.9"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "6.4.13",
+    "@storybook/addon-essentials": "6.4.13",
+    "@storybook/addon-links": "6.4.13",
+    "@storybook/builder-webpack5": "6.4.13",
+    "@storybook/manager-webpack5": "6.4.13",
+    "@storybook/node-logger": "6.4.13",
+    "@storybook/preset-create-react-app": "4.0.0",
+    "@storybook/react": "6.4.13",
+    "@testing-library/cypress": "8.0.0",
+    "@testing-library/jest-dom": "5.14.1",
+    "@testing-library/react": "12.0.0",
+    "@testing-library/user-event": "13.2.1",
+    "@types/history": "4.7.9",
+    "@types/jest": "27.0.1",
+    "@types/node": "16.7.1",
+    "@types/react": "17.0.20",
+    "@types/react-dom": "17.0.9",
+    "@types/react-router-dom": "5.1.8",
+    "@typescript-eslint/eslint-plugin": "5.9.1",
+    "@typescript-eslint/parser": "5.9.1",
+    "cypress": "8.3.0",
+    "env-cmd": "10.1.0",
+    "eslint": "8.6.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-cypress": "2.11.3",
+    "eslint-plugin-import": "2.25.4",
+    "eslint-plugin-jsx-a11y": "6.5.1",
+    "eslint-plugin-react": "7.28.0",
+    "eslint-plugin-react-hooks": "4.3.0",
+    "eslint-plugin-storybook": "^0.5.6",
+    "eslint-plugin-testing-library": "5.0.3",
+    "husky": "7.0.1",
+    "lint-staged": "12.1.7",
+    "msw": "0.35.0",
+    "prettier": "2.3.2",
+    "serve": "12.0.0",
+    "webpack": "^5.66.0"
+  },
+  "scripts": {
+    "build:test": "env-cmd -f .env.development yarn build",
+    "ci": "rm -rf node_modules && yarn install --frozen-lockfile",
+    "cy:open": "yarn serve & cypress open",
+    "cy:run": "yarn serve & cypress run",
+    "serve": "serve --no-clipboard --listen ${PORT:-3000} build",
+    "prepare": "husky install",
+    "start": "env-cmd -f .env.local react-scripts start",
+    "start:test": "env-cmd -f .env.development.local react-scripts start",
+    "test": "react-scripts test --watchAll=false --coverage",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not ie <= 11",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/App/**/*.{ts,tsx}",
+      "src/pages/**/*.{ts,tsx}",
+      "!src/**/{actions,constants,Loadable,reducer,saga,selectors}.ts"
+    ]
+  },
+  "msw": {
+    "workerDirectory": "public"
+  },
+  "eslintConfig": {
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
+  }
+}

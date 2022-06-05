@@ -1,0 +1,9 @@
+.vscode
+.eslintrc.js
+lint-staged.config.js
+build/
+cypress/plugins/index.js
+node_modules/
+public/
+src/reportWebVitals.ts
+src/setupTests.ts
