@@ -2,7 +2,7 @@ import userEvent from '@testing-library/user-event';
 
 import { render, screen } from 'utils/testUtils';
 
-import { ExamplePage } from '..';
+import ExamplePage from '..';
 import { PASSWORD_FIELD_TESTID } from '../ExampleForm/ExampleFormFields';
 
 describe('ExamplePage', () => {
